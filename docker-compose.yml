@@ -1,0 +1,20 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  web:
+    build: flask
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./flask:/var/www
+    links:
+      - redis
+
+  tasks:
+    build: celery
+    volumes:
+      - ./celery:/var/tasks
+    links:
+      - redis
+
+  redis:
+    image: redis
